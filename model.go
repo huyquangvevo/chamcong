@@ -29,6 +29,7 @@ type User struct {
 	Id           uint64
 	DepartmentId uint64
 	PositionId   uint64
+	ManagerId    uint64
 }
 
 type Department struct {

@@ -134,7 +134,7 @@ func (d *Timekeeping) alert() {
 		var managerEmail string
 
 		var users []User
-		d.SqlDB.Where("department_id = ?", depm.DepartmentId).Find(&users)
+		d.SqlDB.Where("department_id = ? AND status = 1", depm.DepartmentId).Find(&users)
 
 		filter := bson.M{
 			"department_id": depm.DepartmentId,
@@ -176,7 +176,7 @@ func (d *Timekeeping) alert() {
 		depm.Work = depm.Total - (depm.NotCheckIn + depm.NotCheckOut + depm.CheckInLate + depm.CheckOutSoon)
 
 		for _, user := range users {
-			if user.PositionId == 1 {
+			if user.ManagerId == user.Id { // truong phong
 				managerEmail = user.Email
 			} else {
 				lstEmpEmail = append(lstEmpEmail, user.Email)
